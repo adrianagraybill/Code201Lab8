@@ -11,25 +11,22 @@ var Comment = function(username, text) {
 
 Comment.prototype.render = function() {
   var liEl = document.createElement('li');
-  liEl.innerHTML = '<b>' + this.username + ': </b><em>' + this.text + '</em>';
+  // liEl.innerHtml = '<b>' + this.username + ': </b><em>' + this.text + '</em>';
+  liEl.innerHTML = ' <b>' + this.username + ': </b><em>' + this.text + '</em>';
   return liEl;
+
 };
 
 function handleCommentSubmit(event) {
   event.preventDefault();
-  // console.log(event);
-  // console.log(event.target.who);
-  console.log(event.target.who.value);
-  console.log(event.target.says.value);
-
   var commenter = event.target.who.value;
-  var remark = event.target.who.value;
+  var remark = event.target.says.value;
 
-  var newComment = new Comment(commenter,remark);
+  var newComment = new Comment(commenter, remark);
 
   event.target.who.value = null;
   event.target.says.value = null;
-
+  
   allComments.unshift(newComment);
   renderAllComments();
 }
