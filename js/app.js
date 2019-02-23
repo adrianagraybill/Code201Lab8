@@ -4,7 +4,6 @@ var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '
 
 var table = document.getElementById('shell');
 var shopForm = document.getElementById('shop-form');
-var shopList = document.getElementById('shop-list');
 
 function Store(name, minCust, maxCust, avgSale) {
   this.name = name;
@@ -17,6 +16,8 @@ function Store(name, minCust, maxCust, avgSale) {
   for (var i = 0; i < hours.length; i++) {
     var answer = Math.floor(Math.random() * ((this.maxCust + 1) - this.minCust)) + this.minCust;
     var cookiePerHr = Math.floor(answer * this.avgSale);
+    //console.log(this.name + ": " + cookiePerHr + " cookies per hour");
+    //console.log(this.name + ": " + answer + " is answer");
     this.sum.push(cookiePerHr);
     this.total = cookiePerHr + this.total;
   }
@@ -77,16 +78,13 @@ function makeHeaderRow() {
 
 }
 
-makeHeaderRow();
-
-function rowLocations() {
-  // Render row locations
-  for (var index = 0; index < locations.length; index++) {
-    locations[index].render();
-  }
+function renderTable() {
+  makeHeaderRow();
+  renderLocations();
+  bottomTotals();
 }
 
-rowLocations();
+renderTable();
 
 function bottomTotals() {
   // Bottom row for totals
@@ -116,31 +114,38 @@ function bottomTotals() {
   footerRow.appendChild(grandTotal);
 }
 
-bottomTotals();
-
 function handleStoreSubmit(event) {
   event.preventDefault();
 
   var name = event.target.name.value;
-  var minCust = event.target.minCust.value;
-  var maxCust = event.target.maxCust.value;
-  var avgSale = event.target.avgSale.value;
+  var minCust = parseInt(event.target.minCust.value);
+  var maxCust = parseInt(event.target.maxCust.value);
+  var avgSale = parseInt(event.target.avgSale.value);
 
   var newStore = new Store(name, minCust, maxCust, avgSale);
 
   event.target.name.value = null;
-  event.target.minCust.value = null;
-  event.target.maxCust.value = null;
-  event.target.avgSale.value = null;
+  event.target.minCust.number = null;
+  event.target.maxCust.number = null;
+  event.target.avgSale.number = null;
 
   locations.unshift(newStore);
-  renderlocations();
+  console.log(newStore);
+
+  clearTable();
+  renderTable();
 }
 
-function renderlocations() {
+function clearTable() {
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+}
+
+function renderLocations() {
   // shopList.innerHTML = '';
   for(var i = 0; i < locations.length; i++) {
-    shopList.appendChild(locations[i].render());
+    locations[i].render();
   }
 }
 
