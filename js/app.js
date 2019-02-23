@@ -97,7 +97,7 @@ function bottomTotals() {
     var footer = document.createElement('td');
     var hourlyTotal = 0;
     for (var lastRow = 0; lastRow < locations.length; lastRow++) {
-      hourlyTotal = hourlyTotal + locations[lastRow].sum[r];
+      hourlyTotal += locations[lastRow].sum[r];
     }
     footer.innerText = hourlyTotal;
     footerRow.appendChild(footer);
