@@ -97,7 +97,7 @@ function bottomTotals() {
     var footer = document.createElement('td');
     var hourlyTotal = 0;
     for (var lastRow = 0; lastRow < locations.length; lastRow++) {
-      hourlyTotal += locations[lastRow].sum[r];
+      hourlyTotal = hourlyTotal + locations[lastRow].sum[r];
     }
     footer.innerText = hourlyTotal;
     footerRow.appendChild(footer);
@@ -125,9 +125,9 @@ function handleStoreSubmit(event) {
   var newStore = new Store(name, minCust, maxCust, avgSale);
 
   event.target.name.value = null;
-  event.target.minCust.number = null;
-  event.target.maxCust.number = null;
-  event.target.avgSale.number = null;
+  event.target.minCust.value = null;
+  event.target.maxCust.value = null;
+  event.target.avgSale.value = null;
 
   locations.unshift(newStore);
   console.log(newStore);
